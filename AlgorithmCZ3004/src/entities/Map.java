@@ -20,12 +20,12 @@ public class Map {
 	/**
 	 * Map constructor.
 	 * 
-	 * Default Grid: y=20 by x=15.
+	 * Default Grid: y=20 by x=20.
 	 */
 	public Map() {
 		// Initialise cells
 		cells = new Cell[maxY][maxX];
-		startCoord = new Coordinate(1,2);
+		startCoord = new Coordinate(1, 2);
 		// Initialise each cell
 		for (int y = maxY - 1; y >= 0; y--) {
 			for (int x = 0; x < maxX; x++) {
@@ -33,25 +33,88 @@ public class Map {
 			}
 		}
 	}
+
+	/**
+	 * Map constructor with import.
+	 * 
+	 * Default Grid: y=20 by x=20.
+	 * 
+	 * @param fileName
+	 */
+	public Map(String fileName) {
+		this();
+		this.importMap(fileName);
+	}
+
+	/**
+	 * Import Map from txt file.
+	 * 
+	 * @param fileName (E.g. "empty.txt")
+	 */
+	public void importMap(String fileName) {
+		try {
+
+			String filePath = new File("").getAbsolutePath();
+			Scanner s = new Scanner(new BufferedReader(new FileReader(filePath.concat("/presets/" + fileName))));
+
+			while (s.hasNext()) {
+				for (int y = maxY - 1; y >= 0; y--) {
+					for (int x = 0; x < maxX; x++) {
+						char type = s.next().charAt(0);
+						cells[y][x].setCellType(type);
+						if (type == 'A' || type == 'B' || type == 'C' || type == 'D') {
+							switch (type) {
+							case 'A':
+								setPictureCell(y,x,0);
+								cells[y][x].setCellType(type);
+								break;
+							case 'B':
+								setPictureCell(y,x,1);
+								cells[y][x].setCellType(type);
+								break;
+							case 'C':
+								setPictureCell(y,x,2);
+								cells[y][x].setCellType(type);
+								break;
+							case 'D':
+								setPictureCell(y,x,3);
+								cells[y][x].setCellType(type);
+								break;
+							}
+
+						}
+
+					}
+				}
+			}
+
+			s.close();
+		} catch (IOException e) {
+			System.err.format("Import Map IOException: %s%n", e);
+		}
+	}
+
 	/**
 	 * Returns a cell on the map.
+	 * 
 	 * @param coordinate
 	 * @return
 	 */
 	public Cell getCell(Coordinate coordinate) {
 		return cells[coordinate.getY()][coordinate.getX()];
 	}
-	
+
 	/**
-	 * Sets PictureCell on Map. 
+	 * Sets PictureCell on Map.
+	 * 
 	 * @param y
 	 * @param x
 	 * @param dir
 	 */
 	public void setPictureCell(int y, int x, float dir) {
-		cells[y][x] = new PictureCell(y,x,dir);
+		cells[y][x] = new PictureCell(y, x, dir);
 	}
-	
+
 	/**
 	 * Set <tt>Coordinate</tt> of the checkpoint.
 	 * 
@@ -60,16 +123,19 @@ public class Map {
 		this.cells[check.getY()][check.getX()].setCellType(Cell.CHECKPOINT);
 		this.checkpointCoord = check;
 	}
+
 	/**
 	 * Get <tt>Coordinate</tt> of the checkpoint.
+	 * 
 	 * @return
 	 */
 	public Coordinate getCheckpoint() {
 		return this.checkpointCoord;
 	}
-	
+
 	/**
 	 * Sets start coordinates.
+	 * 
 	 * @param y
 	 * @param x
 	 */
@@ -77,6 +143,7 @@ public class Map {
 		startCoord.setX(x);
 		startCoord.setY(y);
 	}
+
 	/**
 	 * 
 	 * @return <tt>Coordinate</tt> of the start position.
@@ -84,8 +151,5 @@ public class Map {
 	public Coordinate getStartCoord() {
 		return this.startCoord;
 	}
-	
-
-	
 
 }

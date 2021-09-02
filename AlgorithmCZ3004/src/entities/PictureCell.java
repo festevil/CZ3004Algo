@@ -5,8 +5,8 @@ public class PictureCell extends Cell {
 	/**
 	 * constructor for the PictureCell Class. Used to identify blocks with images on them, 
 	 * and the direction they are facing.
-	 * Direction = 0 means they are facing north, and Direction = 90 means they are
-	 * facing south. 
+	 * Direction = 0 means they are facing north, and Direction = 1 means they are
+	 * facing east. 
 	 * @param x
 	 * @param y
 	 */

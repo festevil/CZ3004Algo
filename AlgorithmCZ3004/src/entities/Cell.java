@@ -1,7 +1,8 @@
 package entities;
 
 public class Cell extends Coordinate {
-	public static final char WALL = 'W', START = 'S', CHECKPOINT = 'C', GOAL = 'G', PATH = 'P', FINAL_PATH = 'F';
+	public static final char WALL = 'W', START = 'S', CHECKPOINT = 'O', GOAL = 'G', PATH = 'P', FINAL_PATH = 'F',
+			NORTHWALL = 'A', EASTWALL = 'B', SOUTHWALL='C',WESTWALL='D';
 	private char cellType; // Cell type listed above
 	private boolean permanentCellType; // Permanent cell type, do not change after set
 	
