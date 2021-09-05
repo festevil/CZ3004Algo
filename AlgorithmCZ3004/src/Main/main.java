@@ -44,4 +44,13 @@ public class main {
 			gui = new GUI(robot, testMap);
 			
 	}
+	public static void runForwardStep() {		
+
+		/* Move forward for one step */
+		robot.moveForward(1);
+		gui.refreshGUI(robot, testMap);
+
+		
+	}
+
 }

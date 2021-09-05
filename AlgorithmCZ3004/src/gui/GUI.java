@@ -7,7 +7,7 @@ import entities.Cell;
 import entities.Coordinate;
 import entities.Map;
 import entities.Robot;
-
+import Main.main;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -172,7 +172,6 @@ public class GUI extends JFrame {
 						if (actualY >= 0 && actualY < Map.maxY) {
 							if (actualX >= 0 && actualX < Map.maxX) {
 								Cell currCell = map.getCell(new Coordinate(actualY, actualX));
-
 								
 								paintRobot(this.getWidth(), actualY, actualX, robot.getFootprint(), g);
 
@@ -218,6 +217,18 @@ public class GUI extends JFrame {
 		/* Display Mode */
 		String mode = "Simulation";
 		ctrlPanel.add(new JLabel("MODE: " + mode, JLabel.CENTER));
+
+		/* Explore (per step) button */
+		JButton moveStep = new JButton("MoveStep");
+		moveStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.runForwardStep();
+			}
+		});
+		ctrlPanel.add(new JLabel("=== Test ===", JLabel.CENTER));
+
+		
+		ctrlPanel.add(moveStep);
 
 		
 
