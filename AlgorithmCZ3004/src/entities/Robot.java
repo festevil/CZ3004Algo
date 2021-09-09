@@ -202,7 +202,10 @@ public class Robot {
 	public void rotate(Rotate direction) {
 		switch (direction) {
 		case RIGHT:	// Rotate clockwise
-			currDir = (currDir + 1) % 4;
+			float newDir2 = (currDir + 1) % 4;
+			currDir = (int) newDir2;
+			break;
+			
 
 	
 		case LEFT:	// Rotate counter-clockwise
@@ -213,6 +216,7 @@ public class Robot {
 				newDir += 4;
 
 			currDir = (int) newDir;
+			break;
 
 			
 		default: // Do nothing

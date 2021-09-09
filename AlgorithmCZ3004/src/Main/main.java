@@ -3,6 +3,7 @@ package Main;
 import entities.Coordinate;
 import entities.Map;
 import entities.Robot;
+import entities.Robot.Rotate;
 import gui.GUI;
 
 public class main {
@@ -51,6 +52,14 @@ public class main {
 		gui.refreshGUI(robot, testMap);
 
 		
+	}
+	public static void rotateleft() {
+		robot.rotate(Rotate.LEFT);
+		gui.refreshGUI(robot, testMap);
+	}
+	public static void rotateright() {
+		robot.rotate(Rotate.RIGHT);
+		gui.refreshGUI(robot, testMap);
 	}
 
 }

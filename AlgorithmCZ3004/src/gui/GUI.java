@@ -225,10 +225,27 @@ public class GUI extends JFrame {
 				main.runForwardStep();
 			}
 		});
+		JButton RotateLeft = new JButton("Rotate Left");
+		RotateLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.rotateleft();
+			}
+		});
+		
+		JButton RotateRight = new JButton("Rotate Right");
+		RotateRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.rotateright();
+			}
+		});
+		
 		ctrlPanel.add(new JLabel("=== Test ===", JLabel.CENTER));
 
 		
 		ctrlPanel.add(moveStep);
+		ctrlPanel.add(new JLabel("=== Rotate Test===", JLabel.CENTER));
+		ctrlPanel.add(RotateLeft);
+		ctrlPanel.add(RotateRight);
 
 		
 
