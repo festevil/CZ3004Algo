@@ -147,7 +147,7 @@ public class FastestPath {
 		/* Create a Virtual robot for reference */
 		// Fastest Path goes North
 		if (finalPath.get(1).getCell().getY() == 2 && finalPath.get(1).getCell().getX() == 1) {
-			virtualRobot = new Robot(new Coordinate(1, 1), Robot.NORTH, false);
+			virtualRobot = new Robot(new Coordinate(1, 1), Robot.EAST, false);
 		}
 
 		// Fastest Path goes East

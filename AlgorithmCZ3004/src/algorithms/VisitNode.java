@@ -12,13 +12,86 @@ public class VisitNode {
 	/**
 	 * Constructor for VisitNode. Prepares state.
 	 */
+	private Coordinate CurrentPos;
+	private int CurrentDir;
 	public VisitNode() {
 		state = '1';//Initial state.
 	}
-	public static void visitnodeOneStep(int x, int y, int direction) {
-	
-		
-		
+	public void visitnodeOneStep(int x, int y, Robot robot) {
+		CurrentPos = robot.getCurrPos();
+		CurrentDir = robot.getCurrDir();
+		if(x>CurrentPos.getX()) {
+			switch(CurrentDir) {
+			case Robot.EAST:
+				robot.moveForward(1);
+				break;
+			case Robot.NORTH:
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
+				break;
+			case Robot.SOUTH:
+				robot.rotate(Rotate.LEFT);
+				robot.moveForward(1);
+				break;
+			case Robot.WEST:
+				robot.moveForward(-1);
+				break;
+			}
+		}
+		if(x<CurrentPos.getX()) {
+			switch(CurrentDir) {
+			case Robot.EAST:
+				robot.moveForward(-1);
+				break;
+			case Robot.NORTH:
+				robot.rotate(Rotate.LEFT);
+				robot.moveForward(1);
+				break;
+			case Robot.SOUTH:
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
+				break;
+			case Robot.WEST:
+				robot.moveForward(1);
+				break;
+			}
+		}
+		if(y>CurrentPos.getY()) {
+			switch(CurrentDir) {
+			case Robot.EAST:
+				robot.rotate(Rotate.LEFT);
+				robot.moveForward(1);
+				break;
+			case Robot.NORTH:
+				robot.moveForward(1);
+				break;
+			case Robot.SOUTH:
+				robot.moveForward(-1);
+				break;
+			case Robot.WEST:
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
+				break;
+			}
+		}
+		if(y<CurrentPos.getY()) {
+			switch(CurrentDir) {
+			case Robot.EAST:
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
+				break;
+			case Robot.NORTH:
+				robot.moveForward(-1);
+				break;
+			case Robot.SOUTH:
+				robot.moveForward(1);
+				break;
+			case Robot.WEST:
+				robot.rotate(Rotate.LEFT);
+				robot.moveForward(1);
+				break;
+			}
+		}	
 	}
 
 }

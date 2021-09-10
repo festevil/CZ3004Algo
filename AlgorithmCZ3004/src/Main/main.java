@@ -1,11 +1,16 @@
 package Main;
 
+import java.util.ArrayList;
+
 import algorithms.FastestPath;
 import entities.Coordinate;
 import entities.Map;
+import entities.Node;
 import entities.Robot;
 import entities.Robot.Rotate;
 import gui.GUI;
+import Main.movementsim;
+import algorithms.VisitNode;
 
 
 public class main {
@@ -18,6 +23,7 @@ public class main {
 	public static Map exploredMap;
 	public static GUI gui;
 	public static FastestPath fp;
+	public static VisitNode vn;
 
 
 	/* Simulation Only Variables */
@@ -65,9 +71,24 @@ public class main {
 		gui.refreshGUI(robot, testMap);
 	}
 	public static void runShowFastestPath() {
-		fp = new FastestPath(testMap, new Coordinate(4, 5), new Coordinate(13, 2));
-		testMap.finalPathReveal(fp.runAStar());
-		gui.refreshGUI(robot, testMap);
+		if (tSimExplore == null || !tSimExplore.isAlive()) {
+			tSimExplore = new Thread(new movementsim());
+			tSimExplore.start();
+		} else {
+			tSimExplore.interrupt();
+		}
+		
+	}
+	public static void wait(int ms)
+	{
+	    try
+	    {
+	        Thread.sleep(ms);
+	    }
+	    catch(InterruptedException ex)
+	    {
+	        Thread.currentThread().interrupt();
+	    }
 	}
 
 }
