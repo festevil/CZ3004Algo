@@ -1,10 +1,12 @@
 package Main;
 
+import algorithms.FastestPath;
 import entities.Coordinate;
 import entities.Map;
 import entities.Robot;
 import entities.Robot.Rotate;
 import gui.GUI;
+
 
 public class main {
 
@@ -15,6 +17,7 @@ public class main {
 	public static Robot robot;
 	public static Map exploredMap;
 	public static GUI gui;
+	public static FastestPath fp;
 
 
 	/* Simulation Only Variables */
@@ -59,6 +62,11 @@ public class main {
 	}
 	public static void rotateright() {
 		robot.rotate(Rotate.RIGHT);
+		gui.refreshGUI(robot, testMap);
+	}
+	public static void runShowFastestPath() {
+		fp = new FastestPath(testMap, new Coordinate(1, 1), new Coordinate(4, 4));
+		testMap.finalPathReveal(fp.runAStar());
 		gui.refreshGUI(robot, testMap);
 	}
 

@@ -114,15 +114,5 @@ public class Node implements Comparable<Node> {
 		else
 			return Integer.compare(this.distanceToStart, n.distanceToStart);
 	}
-	/** 
-	 * Returns the distance of this node from node n.
-	 * Returns a float value.
-	 * @param n
-	 * @return
-	 */
-	public double getDistancefromNode(Node n) {
-		Cell ncell = n.getCell();
-		double distance = (Math.pow(cell.getX()-ncell.getX(),2))+Math.pow(cell.getY()-ncell.getY(), 2);
-		return distance;
-	}
+	
 }

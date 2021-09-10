@@ -151,5 +151,22 @@ public class Map {
 	public Coordinate getStartCoord() {
 		return this.startCoord;
 	}
+	
+	public void finalPathReveal(ArrayList<Node> finalPath) {
+		/* Clear any remnants of previously computed final path */
+		for (int y = 0; y < maxY; y++) {
+			for (int x = 0; x < maxX; x++) {
+				if (cells[y][x].getCellType() == Cell.FINAL_PATH)
+					cells[y][x].setCellType(Cell.PATH);
+			}
+		}
+
+		/* Mark cellType as FINAL_PATH */
+		for (int i = 0; i < finalPath.size(); i++) {
+			Node n = finalPath.get(i);
+			Cell cell = this.cells[n.getCell().getY()][n.getCell().getX()];
+			cell.setCellType(Cell.FINAL_PATH);
+		}
+	}
 
 }

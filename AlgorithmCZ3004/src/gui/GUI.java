@@ -239,10 +239,18 @@ public class GUI extends JFrame {
 			}
 		});
 		
+		JButton fastestPath = new JButton("Show A*Star Fastest Path");
+		fastestPath.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.runShowFastestPath();
+			}
+		});
+		
 		ctrlPanel.add(new JLabel("=== Test ===", JLabel.CENTER));
 
 		
 		ctrlPanel.add(moveStep);
+		ctrlPanel.add(fastestPath);
 		ctrlPanel.add(new JLabel("=== Rotate Test===", JLabel.CENTER));
 		ctrlPanel.add(RotateLeft);
 		ctrlPanel.add(RotateRight);
