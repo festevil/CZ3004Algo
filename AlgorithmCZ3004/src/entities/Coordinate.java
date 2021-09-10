@@ -23,6 +23,36 @@ public class Coordinate {
 	public void setX(int x) {
 		this.x = x;
 	}
+	/**
+	 * Object hash code contract for use in a HashMap.
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.x;
+		result = prime * result + this.y;
+		return result;
+	}
+
+	/**
+	 * Object equals contract for use in a HashMap.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (x != other.getX())
+			return false;
+		if (y != other.getY())
+			return false;
+		return true;
+	}
 }
 
 

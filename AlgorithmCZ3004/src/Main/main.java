@@ -65,7 +65,7 @@ public class main {
 		gui.refreshGUI(robot, testMap);
 	}
 	public static void runShowFastestPath() {
-		fp = new FastestPath(testMap, new Coordinate(1, 1), new Coordinate(4, 4));
+		fp = new FastestPath(testMap, new Coordinate(4, 5), new Coordinate(13, 2));
 		testMap.finalPathReveal(fp.runAStar());
 		gui.refreshGUI(robot, testMap);
 	}
