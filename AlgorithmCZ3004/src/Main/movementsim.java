@@ -37,13 +37,14 @@ public class movementsim implements Runnable {
 			try {
 				fp = new FastestPath(testMap, new Coordinate(1, 1), new Coordinate(4, 5));
 				ArrayList<Node> fastest = fp.runAStar();
-				vn = new VisitNode();
+				vn = new VisitNode(robot);
 				for (int i = 0; i < fastest.size(); i++) {
 					Node n = fastest.get(i);
-					vn.visitnodeOneStep(n.getCell().getX(),n.getCell().getY(), robot);
+					vn.visitnodeOneStep(n.getCell().getX(),n.getCell().getY());
 					gui.refreshGUI(robot, testMap);
 					Thread.sleep(100);
 				}
+				vn.directionRotate(Robot.NORTH);
 				break;
 
 				

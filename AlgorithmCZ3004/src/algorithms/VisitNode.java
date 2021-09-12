@@ -14,10 +14,12 @@ public class VisitNode {
 	 */
 	private Coordinate CurrentPos;
 	private int CurrentDir;
-	public VisitNode() {
+	private Robot robot;
+	public VisitNode(Robot robot) {
 		state = '1';//Initial state.
+		this.robot = robot;
 	}
-	public void visitnodeOneStep(int x, int y, Robot robot) {
+	public void visitnodeOneStep(int x, int y) {
 		CurrentPos = robot.getCurrPos();
 		CurrentDir = robot.getCurrDir();
 		if(x>CurrentPos.getX()) {
@@ -34,14 +36,18 @@ public class VisitNode {
 				robot.moveForward(1);
 				break;
 			case Robot.WEST:
-				robot.moveForward(-1);
+				robot.rotate(Rotate.RIGHT);
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
 				break;
 			}
 		}
 		if(x<CurrentPos.getX()) {
 			switch(CurrentDir) {
 			case Robot.EAST:
-				robot.moveForward(-1);
+				robot.rotate(Rotate.RIGHT);
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
 				break;
 			case Robot.NORTH:
 				robot.rotate(Rotate.LEFT);
@@ -66,7 +72,9 @@ public class VisitNode {
 				robot.moveForward(1);
 				break;
 			case Robot.SOUTH:
-				robot.moveForward(-1);
+				robot.rotate(Rotate.RIGHT);
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
 				break;
 			case Robot.WEST:
 				robot.rotate(Rotate.RIGHT);
@@ -81,7 +89,9 @@ public class VisitNode {
 				robot.moveForward(1);
 				break;
 			case Robot.NORTH:
-				robot.moveForward(-1);
+				robot.rotate(Rotate.RIGHT);
+				robot.rotate(Rotate.RIGHT);
+				robot.moveForward(1);
 				break;
 			case Robot.SOUTH:
 				robot.moveForward(1);
@@ -92,6 +102,57 @@ public class VisitNode {
 				break;
 			}
 		}	
+	}
+	public void directionRotate(int direction) {
+		CurrentDir = robot.getCurrDir();
+		if (direction == Robot.NORTH) {
+			switch(CurrentDir) {
+			case Robot.NORTH:
+				break;
+			case Robot.EAST:
+				robot.rotate(Rotate.LEFT);
+				break;
+			case Robot.WEST:
+				robot.rotate(Rotate.RIGHT);
+				break;
+			}
+		}
+		if (direction == Robot.EAST) {
+			switch(CurrentDir) {
+			case Robot.EAST:
+				break;
+			case Robot.SOUTH:
+				robot.rotate(Rotate.LEFT);
+				break;
+			case Robot.NORTH:
+				robot.rotate(Rotate.RIGHT);
+				break;
+			}
+		}
+		if (direction == Robot.SOUTH) {
+			switch(CurrentDir) {
+			case Robot.SOUTH:
+				break;
+			case Robot.WEST:
+				robot.rotate(Rotate.LEFT);
+				break;
+			case Robot.EAST:
+				robot.rotate(Rotate.RIGHT);
+				break;
+			}
+		}
+		if (direction == Robot.WEST) {
+			switch(CurrentDir) {
+			case Robot.WEST:
+				break;
+			case Robot.SOUTH:
+				robot.rotate(Rotate.LEFT);
+				break;
+			case Robot.NORTH:
+				robot.rotate(Rotate.RIGHT);
+				break;
+			}
+		}
 	}
 
 }
