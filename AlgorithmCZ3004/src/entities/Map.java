@@ -16,6 +16,7 @@ public class Map {
 	private Cell cells[][];
 	private Coordinate startCoord;
 	private Coordinate checkpointCoord;
+	private ArrayList<Cell> pictureCellList = new ArrayList<Cell>();
 
 	/**
 	 * Map constructor.
@@ -112,7 +113,16 @@ public class Map {
 	 * @param dir
 	 */
 	public void setPictureCell(int y, int x, float dir) {
-		cells[y][x] = new PictureCell(y, x, dir);
+		PictureCell curPictureCell = new PictureCell(y, x, dir);
+		cells[y][x] = curPictureCell;
+		pictureCellList.add(curPictureCell);
+	}
+
+	/**
+	 * Get PictureCellList on Map.
+	 */
+	public ArrayList<Cell> getPictureCellList() {
+		return pictureCellList;
 	}
 
 	/**
