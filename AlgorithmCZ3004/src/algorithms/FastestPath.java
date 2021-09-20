@@ -58,7 +58,7 @@ public class FastestPath {
 				}
 			}
 		}
-		System.out.println("FastestPath: " + nodes.size() + " nodes");
+		//System.out.println("FastestPath: " + nodes.size() + " nodes");
 
 		int totalEdges = 0;
 		/* Step 2: Link nodes with edges */
@@ -68,7 +68,7 @@ public class FastestPath {
 
 			totalEdges += neighbours.size();
 		}
-		System.out.println("FastestPath: " + totalEdges + " edges");
+		//System.out.println("FastestPath: " + totalEdges + " edges");
 	}
 
 	public ArrayList<Node> runAStar() {

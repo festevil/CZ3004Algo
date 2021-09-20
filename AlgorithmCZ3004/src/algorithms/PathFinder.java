@@ -1,25 +1,47 @@
 package algorithms;
 import java.util.ArrayList;
-import java.util.Collections;
 import entities.Cell;
 
 public class PathFinder {
     public PathFinder() {}
 
-    public ArrayList<Integer> findShortestPath(ArrayList<Cell> pictureCellList){
-        //intializing set ups
-        Cell origin = new Cell(1, 1);
-        int numNodes = pictureCellList.size();
-        ArrayList<Cell> totalCellList = new ArrayList<Cell>(1 + numNodes);
-        Cell[] pictureCellArray = new Cell[pictureCellList.size()];
-        pictureCellArray = pictureCellList.toArray(pictureCellArray);
-        totalCellList.add(origin);
-        Collections.addAll(totalCellList, pictureCellArray);
+
+    public ArrayList<Cell> findShortestPath(ArrayList<Cell> pictureCellList){
+        //intializing
+        ArrayList<Cell> totalCellList = processCellList(pictureCellList);
+        
+        ArrayList<Cell> finalCellList = new ArrayList<Cell>(totalCellList.size());
 
         double[][] adjacencyMatrix = getAdjacencyMatrix(totalCellList);
         ArrayList<Integer> nodeList = getShortestPathGreedy(adjacencyMatrix);
-        System.out.println(nodeList);
-        return nodeList;
+        for (int i = 0; i < nodeList.size(); i++) {
+            finalCellList.add(totalCellList.get(nodeList.get(i)));
+        }
+        return finalCellList;
+    }
+
+    public ArrayList<Cell> processCellList(ArrayList<Cell> pictureCellList){
+        int numNodes = pictureCellList.size();
+        ArrayList<Cell> totalCellList = new ArrayList<Cell>(1 + numNodes);
+        totalCellList.add(new Cell(1, 1));
+        for (int i = 0; i < pictureCellList.size(); i++) {
+            Cell curCell = pictureCellList.get(i);
+            switch(curCell.getCellType()) {
+                case 'A':
+                    totalCellList.add(new Cell(curCell.getY() + 3, curCell.getX()));
+                    break;
+                case 'B':
+                    totalCellList.add(new Cell(curCell.getY(), curCell.getX() + 3));
+                    break;
+                case 'C':
+                    totalCellList.add(new Cell(curCell.getY() - 3, curCell.getX()));
+                    break;
+                case 'D':
+                    totalCellList.add(new Cell(curCell.getY(), curCell.getX() - 3));
+                    break;
+            }
+        }
+        return totalCellList;
     }
 
     private ArrayList<Integer> getShortestPathGreedy(double[][] adjacencyMatrix) {
@@ -42,9 +64,9 @@ public class PathFinder {
             // for current node, find the closest node
             for (int ii = 0; ii < adjacencyMatrix.length; ii++) {
                 if (currentNode != ii && !path.contains(ii)) {
-                    System.out.println("Calculating for " + currentNode + " " + ii);
+                    // System.out.println("Calculating for " + currentNode + " " + ii);
                     if (adjacencyMatrix[currentNode][ii] < min) {
-                        System.out.println(currentNode + " " + ii);
+                        //System.out.println(currentNode + " " + ii);
                         minIdx = ii;
                         min = adjacencyMatrix[currentNode][ii];
                     }
