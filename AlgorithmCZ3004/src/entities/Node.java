@@ -27,20 +27,14 @@ public class Node implements Comparable<Node> {
 		this.isVisited = isVisited;
 	}
 
-	/**
-	 * <b>h(n)</b>: Heuristic
-	 * 
-	 * @return
-	 */
 	public int getHeuristic() {
 		return heuristic;
 	}
 
-	/**
-	 * <b>g(n)</b>: Sum of weights
-	 * 
-	 * @return
-	 */
+	public void setHeuristic(int heuristic) {
+		this.heuristic = heuristic;
+	}
+
 	public int getDistanceToStart() {
 		return distanceToStart;
 	}
@@ -49,11 +43,6 @@ public class Node implements Comparable<Node> {
 		this.distanceToStart = cost;
 	}
 
-	/**
-	 * <b>f(n)</b>: Weights + this.heuristic
-	 * 
-	 * @return
-	 */
 	public int getTotalCost() {
 		return totalCost;
 	}
@@ -62,9 +51,7 @@ public class Node implements Comparable<Node> {
 		this.totalCost = totalCost;
 	}
 
-	/**
-	 * Object hash code contract for use in a HashMap.
-	 */
+	//Object hash code contract for use in a HashMap.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,9 +61,7 @@ public class Node implements Comparable<Node> {
 		return result;
 	}
 
-	/**
-	 * Object equals contract for use in a HashMap.
-	 */
+	//Object equals contract for use in a HashMap.
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -89,7 +74,8 @@ public class Node implements Comparable<Node> {
 		if (cell == null) {
 			if (other.cell != null)
 				return false;
-		} else if (!cell.equals(other.cell))
+		} 
+		else if (!cell.equals(other.cell))
 			return false;
 		if (heuristic != other.heuristic)
 			return false;
@@ -97,13 +83,10 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
-	 * Makes a <tt>Node</tt> totalWeight comparable with another <tt>Node</tt> for use in a PriorityQueue.
+	 * Makes a Node totalWeight comparable with another Node for use in a PriorityQueue.
 	 * 
 	 * Compares this object with the specified object for order. Returns a negative integer, zero, or a positive
 	 * integer as this object is less than, equal to, or greater than the specified object.
-	 * 
-	 * @param n
-	 * @return
 	 */
 	@Override
 	public int compareTo(Node n) {
@@ -114,5 +97,4 @@ public class Node implements Comparable<Node> {
 		else
 			return Integer.compare(this.distanceToStart, n.distanceToStart);
 	}
-	
 }
