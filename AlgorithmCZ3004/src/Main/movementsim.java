@@ -38,32 +38,43 @@ public class movementsim implements Runnable {
 		System.out.println(":: " + getClass().getName() + " Thread Started ::");
 
 		while (!Thread.currentThread().isInterrupted()) {
-			ArrayList<Cell> cellList = testMap.getPictureCellList();
-			ArrayList<Integer> nodeList = pf.findShortestPath(cellList);
-			for (int i = 0; i < cellList.size() - 1; i++) {
-				try {
-					Coordinate startingPoint = new Coordinate(1, 1);
-					if (i != 0) {
-						Cell startingCell = cellList.get(nodeList.get(i) - 1);
-						startingPoint = new Coordinate(startingCell.getY(), startingCell.getX());
-					}
-					Cell endingCell = cellList.get(nodeList.get(i+1) - 1);
-					Coordinate endingPoint = new Coordinate(endingCell.getY(), endingCell.getX());
-					fp = new FastestPath(testMap, startingPoint, endingPoint);
+			ArrayList<Cell> pictureCellList = testMap.getPictureCellList();
+			ArrayList<Cell> totalCellList = pf.findShortestPath(pictureCellList);
+			try {
+				for (int i = 0; i < totalCellList.size() - 1; i++) {
+					Cell startingCell = totalCellList.get(i);
+					Cell endingCell = totalCellList.get(i+1);
+					fp = new FastestPath(testMap, new Coordinate(startingCell.getY(), startingCell.getX()), new Coordinate(endingCell.getY(), endingCell.getX()));
 					ArrayList<Node> fastest = fp.runAStar();
 					vn = new VisitNode(robot);
 					for (int j = 0; j < fastest.size(); j++) {
 						Node n = fastest.get(j);
 						vn.visitnodeOneStep(n.getCell().getX(), n.getCell().getY());
 						gui.refreshGUI(robot, testMap);
-						Thread.sleep(100);
+						Thread.sleep(200);
 					}
-					vn.directionRotate(Robot.NORTH);
-					if (i == cellList.size() - 2) 
-						break;
-				} catch (InterruptedException e) {
-					break;
+					switch(endingCell.getCellType()) {
+						case 'A':
+							vn.directionRotate(Robot.NORTH);
+							break;
+						
+						case 'B':
+							vn.directionRotate(Robot.EAST);
+							break;
+							
+						case 'C':
+							vn.directionRotate(Robot.SOUTH);
+							break;
+						
+						case 'D':
+							vn.directionRotate(Robot.WEST);
+							break;
+					}
 				}
+				break;
+			}
+			catch (InterruptedException e) {
+				break;
 			}
 		}
 
