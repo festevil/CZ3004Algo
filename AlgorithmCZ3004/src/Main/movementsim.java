@@ -22,6 +22,7 @@ public class movementsim implements Runnable {
 	private VisitNode vn;
 	private FastestPath fp;
 	private PathFinder pf = new PathFinder();
+	private Coordinate robpos;
 
 	public movementsim() {
 		this.gui = main.gui;
@@ -53,22 +54,31 @@ public class movementsim implements Runnable {
 						gui.refreshGUI(robot, testMap);
 						Thread.sleep(200);
 					}
-					switch(endingCell.getCellType()) {
-						case 'A':
-							vn.directionRotate(Robot.NORTH);
-							break;
+					robpos = robot.getCurrPos();;
+					if(testMap.getCell(new Coordinate(robpos.getY()+3,robpos.getX())).getCellType() == Cell.SOUTHWALL) {
+						vn.directionRotate(Robot.NORTH);
+						System.out.println("Rotate North");
+						gui.refreshGUI(robot, testMap);
+						Thread.sleep(200);
 						
-						case 'B':
-							vn.directionRotate(Robot.EAST);
-							break;
-							
-						case 'C':
-							vn.directionRotate(Robot.SOUTH);
-							break;
-						
-						case 'D':
-							vn.directionRotate(Robot.WEST);
-							break;
+					}
+					else if(testMap.getCell(new Coordinate(robpos.getY(),robpos.getX()+3)).getCellType() == Cell.WESTWALL) {
+						vn.directionRotate(Robot.EAST);
+						System.out.println("Rotate EAST");
+						gui.refreshGUI(robot, testMap);
+						Thread.sleep(200);
+					}
+					else if(testMap.getCell(new Coordinate(robpos.getY(),robpos.getX()-3)).getCellType() == Cell.EASTWALL) {
+						vn.directionRotate(Robot.WEST);
+						System.out.println("Rotate WEST");
+						gui.refreshGUI(robot, testMap);
+						Thread.sleep(200);
+					}
+					else if(testMap.getCell(new Coordinate(robpos.getY()-3,robpos.getX())).getCellType() == Cell.NORTHWALL) {
+						vn.directionRotate(Robot.SOUTH);
+						System.out.println("Rotate SOUTH");
+						gui.refreshGUI(robot, testMap);
+						Thread.sleep(200);
 					}
 				}
 				break;
