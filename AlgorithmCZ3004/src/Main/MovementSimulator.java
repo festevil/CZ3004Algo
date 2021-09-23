@@ -53,6 +53,7 @@ public class MovementSimulator implements Runnable {
 					}
 					vn.directionRotate(coorList.get(i+1).getDir());
 					gui.refreshGUI(robot, testMap);
+					Thread.sleep(300);
 				}
 				break;
 			}

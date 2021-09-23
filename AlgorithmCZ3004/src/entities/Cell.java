@@ -3,7 +3,7 @@ package entities;
 public class Cell extends Coordinate {
 	public static final char 
 		WALL = 'W', START = 'S', GOAL = 'G', PATH = 'P', //other cells
-		NORTHWALL = 'A', EASTWALL = 'B', SOUTHWALL = 'C', WESTWALL = 'D'; //picture cells
+		NORTHWALL = 'A', EASTWALL = 'B', SOUTHWALL = 'C', WESTWALL = 'D', UNKNOWN = 'U'; //picture cells
 	private char cellType = PATH; // cell type listed above, default is PATH
 	private boolean permanentCellType = false; // permanent cell type, do not change after set, default is false
 	
