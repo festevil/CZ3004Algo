@@ -2,18 +2,15 @@ package gui;
 
 import javax.swing.*;
 
-
 import entities.Cell;
 import entities.Coordinate;
 import entities.Map;
 import entities.Robot;
-import Main.main;
+import Main.MainFile;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class GUI extends JFrame {
 
@@ -26,12 +23,7 @@ public class GUI extends JFrame {
 	private Robot robot;
 	private Map map;
 
-	/**
-	 * Constructor for <tt>GUI</tt> as a JFrame.
-	 * 
-	 * @param robot
-	 * @param map
-	 */
+	//Constructor for GUI as a JFrame.
 	public GUI(Robot robot, Map map) {
 		super("Test run");
 
@@ -45,25 +37,15 @@ public class GUI extends JFrame {
 		this.setVisible(true);
 	}
 
-	/**
-	 * Ensures <tt>GUI</tt> is showing the latest instance of <tt>Robot</tt> and <tt>Map</tt>.
-	 * 
-	 * @param robot
-	 * @param map
-	 */
+	//Ensures GUI is showing the latest instance of Robot and Map.
 	public void refreshGUI(Robot robot, Map map) {
 		this.robot = robot;
 		this.map = map;
 
 		mapPanel.repaint();	// Repaint mapPanel to show updated Robot position
-
 	}
 
-	/**
-	 * (Optional) Set mode of GUI visually.
-	 * 
-	 * @param connected
-	 */
+	//(Optional) Set mode of GUI visually.
 	public void setModeColour(boolean connected) {
 		if (connected)
 			mainContainer.setBackground(new Color(115, 221, 141));
@@ -71,20 +53,18 @@ public class GUI extends JFrame {
 			mainContainer.setBackground(new Color(198, 105, 105));
 	}
 
-	/**
-	 * Initialise the Container, JPanels and cellsUI.
-	 */
+	//Initialise the Container, JPanels and cellsUI.
 	private void initLayout() {
 		mapPanel = new MapPanel();
 		mapPanel.setOpaque(false);
 		mapPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		populateMapPanel();		// Populate Map Panel with cells from _map
+		populateMapPanel();	// Populate Map Panel with cells from _map
 
 		ctrlPanel = new JPanel();
 		ctrlPanel.setOpaque(false);
 		ctrlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		ctrlPanel.setLayout(new GridLayout(10, 1, 0, 10));
-		populateCtrlPanel();	// Populate Control Panel with buttons
+		populateCtrlPanel(); // Populate Control Panel with buttons
 
 		mainContainer = this.getContentPane();
 		mainContainer.setLayout(new BorderLayout(0, 0));
@@ -93,20 +73,16 @@ public class GUI extends JFrame {
 		this.setSize(900, 800); // Width, Height
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Exit mainUI on close
 		
-
 		// Launch mainUI to the right of the screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 1 - getSize().width / 1, dim.height / 2 - getSize().height / 2 - 20);
 	}
 
 	/**
-	 * Custom class for <tt>MapPanel</tt> as a JPanel.
-	 * 
+	 * Custom class for MapPanel as a JPanel.
 	 * Responsible for producing a responsive grid map.
-	 *
-	 */
+	*/
 	private class MapPanel extends JPanel {
-
 		private static final long serialVersionUID = 3896801036058623157L;
 
 		public MapPanel() {
@@ -130,9 +106,11 @@ public class GUI extends JFrame {
 				return d;
 
 			else {
-				// Final Dimension should be 16:21 (W:H) aspect ratio for 16 cells by 21 cells
-				// (including axis labelling)
-				// Use of double for more accuracy -> then round to nearest integer
+				/**
+				 * Final Dimension should be 16:21 (W:H) aspect ratio for 16 cells by 21 cells
+				 * (including axis labelling)
+				 * Use of double for more accuracy -> then round to nearest integer
+				*/
 				double numOfCellsWidth = Map.maxX + 1;	// 16 = 15 + 1
 				double numOfCellsHeight = Map.maxY + 1;	// 21 = 20 + 1
 
@@ -145,15 +123,14 @@ public class GUI extends JFrame {
 	}
 
 	/**
-	 * Populate cells and robot location in the <tt>mapPanel</tt>.
-	 * 
-	 * Responsible for colouring cells by <tt>cellType</tt> and painting of cells occupied by robot.
+	 * Populate cells and robot location in the mapPanel.
+	 * Responsible for colouring cells by cellType and painting of cells occupied by robot.
 	 */
 	private void populateMapPanel() {
 		cellsUI = new JLabel[Map.maxY][Map.maxX];
 
 		// Populate Map Panel
-		for (int y = Map.maxY; y >= 0; y--) {		// Additional loop for axis labelling
+		for (int y = Map.maxY; y >= 0; y--) { // Additional loop for axis labelling
 			for (int x = 0; x <= Map.maxX; x++) {
 				int actualY = y - 1;
 				int actualX = x - 1;
@@ -171,17 +148,18 @@ public class GUI extends JFrame {
 						/* Don't paint on axis labelling */
 						if (actualY >= 0 && actualY < Map.maxY) {
 							if (actualX >= 0 && actualX < Map.maxX) {
-								Cell currCell = map.getCell(new Coordinate(actualY, actualX));
+								Cell curCell = map.getCell(new Coordinate(actualY, actualX));
 								
 								paintRobot(this.getWidth(), actualY, actualX, robot.getFootprint(), g);
 
-								setCellBG(currCell, this);
-								setCellBorder(currCell,this);
-								labelPermanentFlag(currCell, this);
+								setCellBG(curCell, this);
+								setCellBorder(curCell,this);
+								labelPermanentFlag(curCell, this);
 							}
 						}
 					}
 				};
+
 				newCell.setPreferredSize(new Dimension(40, 40)); // Ensure cell is a square
 				newCell.setOpaque(true);
 
@@ -189,10 +167,12 @@ public class GUI extends JFrame {
 				if (y == 0 && x == 0) {
 					newCell.setText("y/x");
 					mapPanel.add(newCell);
-				} else if (x == 0) {
+				} 
+				else if (x == 0) {
 					newCell.setText(Integer.toString(actualY));
 					mapPanel.add(newCell);
-				} else if (y == 0) {
+				} 
+				else if (y == 0) {
 					newCell.setText(Integer.toString(actualX));
 					mapPanel.add(newCell);
 				}
@@ -202,7 +182,6 @@ public class GUI extends JFrame {
 					newCell.setOpaque(true);
 					newCell.setBackground(cellColour(map.getCell(new Coordinate(y - 1, x - 1))));
 					
-
 					cellsUI[actualY][actualX] = newCell;
 					mapPanel.add(cellsUI[actualY][actualX]);
 				}
@@ -210,67 +189,52 @@ public class GUI extends JFrame {
 		}
 	}
 
-	/**
-	 * Populate Labels and Buttons in the <tt>ctrlPanel</tt>.
-	 */
+	//Populate Labels and Buttons in the ctrlPanel.
 	private void populateCtrlPanel() {
-		/* Display Mode */
+		// Display Mode
 		String mode = "Simulation";
 		ctrlPanel.add(new JLabel("MODE: " + mode, JLabel.CENTER));
 
-		/* Explore (per step) button */
+		// Explore (per step) button
 		JButton moveStep = new JButton("MoveStep");
 		moveStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.runForwardStep();
+				MainFile.runForwardStep();
 			}
 		});
+
 		JButton RotateLeft = new JButton("Rotate Left");
 		RotateLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.rotateleft();
+				MainFile.rotateleft();
 			}
 		});
 		
 		JButton RotateRight = new JButton("Rotate Right");
 		RotateRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.rotateright();
+				MainFile.rotateright();
 			}
 		});
 		
-		JButton fastestPath = new JButton("Show A*Star Fastest Path");
+		JButton fastestPath = new JButton("Run Fastest Path");
 		fastestPath.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.runShowFastestPath();
+				MainFile.runShowFastestPath();
 			}
 		});
 		
-		ctrlPanel.add(new JLabel("=== Test ===", JLabel.CENTER));
-
-		
+		ctrlPanel.add(new JLabel("=== Manual Control ===", JLabel.CENTER));
 		ctrlPanel.add(moveStep);
-		ctrlPanel.add(fastestPath);
-		ctrlPanel.add(new JLabel("=== Rotate Test===", JLabel.CENTER));
 		ctrlPanel.add(RotateLeft);
 		ctrlPanel.add(RotateRight);
-
-		
-
-		
+		ctrlPanel.add(new JLabel("=== Automatic Fastest Path ===", JLabel.CENTER));
+		ctrlPanel.add(fastestPath);
 	}
 
-	/**
-	 * Paint <tt>Robot</tt> with provided Graphics <tt>g</tt> if <tt>actualY</tt> and <tt>actualX</tt> matches
-	 * <tt>robotFootprint</tt>.
-	 * 
-	 * @param actualY
-	 * @param actualX
-	 * @param robotFootprint
-	 * @param g
-	 */
+	//Paint Robot with provided Graphics g if actualY and actualX matches robotFootprint.
 	private void paintRobot(int width, int actualY, int actualX, Coordinate[] robotFootprint, Graphics g) {
-		width /= 2;		// For a responsive UI
+		width /= 2;	// For a responsive UI
 
 		// Paint FRONT_LEFT of Robot
 		if (actualY == robotFootprint[Robot.FRONT_LEFT].getY() && actualX == robotFootprint[Robot.FRONT_LEFT].getX()) {
@@ -324,8 +288,7 @@ public class GUI extends JFrame {
 		}
 
 		// Paint BACK_CENTER of Robot
-		if (actualY == robotFootprint[Robot.BACK_CENTER].getY()
-				&& actualX == robotFootprint[Robot.BACK_CENTER].getX()) {
+		if (actualY == robotFootprint[Robot.BACK_CENTER].getY() && actualX == robotFootprint[Robot.BACK_CENTER].getX()) {
 			g.setColor(new Color(127, 204, 196));
 			g.fillOval(width / 2, width / 2, width, width);
 		}
@@ -334,84 +297,59 @@ public class GUI extends JFrame {
 		if (actualY == robotFootprint[Robot.BACK_RIGHT].getY() && actualX == robotFootprint[Robot.BACK_RIGHT].getX()) {
 			g.setColor(new Color(127, 204, 196));
 			g.fillOval(width / 2, width / 2, width, width);
+			g.drawOval(width / 4, width / 4, (int) (width * 1.5), (int) (width * 1.5));	// Indicates sensor
 		}
 	}
 
 	
 
-	/**
-	 * Set background colour of cell.
-	 * 
-	 * @param currCell
-	 * @param jl
-	 */
-	private void setCellBG(Cell currCell, JLabel jl) {
-		jl.setBackground(cellColour(currCell));
+	//Set background colour of cell.
+	private void setCellBG(Cell curCell, JLabel jl) {
+		jl.setBackground(cellColour(curCell));
 	}
-	/**
-	 * Set matte border on cell. Used for PictureCell colouring.
-	 * @param currCell
-	 * @param jl
-	 */
-	private void setCellBorder(Cell currCell, JLabel jl) {
-		switch(currCell.getCellType()) {
-		case Cell.NORTHWALL:
-			jl.setBorder(BorderFactory.createMatteBorder(
-                5, 1, 1, 1, Color.red));
-			break;
-			
-		case Cell.EASTWALL:
-			jl.setBorder(BorderFactory.createMatteBorder(
-	                1, 1, 1, 5, Color.red));
-			break;
-			
-		case Cell.SOUTHWALL:
-			jl.setBorder(BorderFactory.createMatteBorder(
-	                1, 1, 5, 1, Color.red));
-			break;
-		case Cell.WESTWALL:
-			jl.setBorder(BorderFactory.createMatteBorder(
-	                1, 5, 1, 1, Color.red));
-			break;
-			
+
+	//Set matte border on cell. Used for PictureCell colouring.
+	private void setCellBorder(Cell curCell, JLabel jl) {
+		switch(curCell.getCellType()) {
+			case Cell.NORTHWALL:
+				jl.setBorder(BorderFactory.createMatteBorder(5, 1, 1, 1, Color.red));
+				break;
+			case Cell.EASTWALL:
+				jl.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 5, Color.red));
+				break;
+			case Cell.SOUTHWALL:
+				jl.setBorder(BorderFactory.createMatteBorder(1, 1, 5, 1, Color.red));
+				break;
+			case Cell.WESTWALL:
+				jl.setBorder(BorderFactory.createMatteBorder(1, 5, 1, 1, Color.red));
+				break;
 		}
 	}
 
-	/**
-	 * Cell colour rule based on <tt>cellType</tt>.
-	 * 
-	 * @param cell
-	 * @return
-	 */
+	//Cell colour rule based on cellType.
 	private Color cellColour(Cell cell) {
 		switch (cell.getCellType()) {
-		case Cell.FINAL_PATH:	// Prioritise showing FINAL_PATH
-			return Color.BLUE;
-		case Cell.START:
-			return Color.YELLOW;
-		case Cell.GOAL:
-			return Color.GREEN;
-		case Cell.WALL:
-			return Color.BLACK;
-		case Cell.PATH:
-			return Color.WHITE;
-		default:				// Unknown cells
-			return Color.BLACK;
+			case Cell.START:
+				return Color.YELLOW;
+			case Cell.GOAL:
+				return Color.GREEN;
+			case Cell.WALL:
+				return Color.BLACK;
+			case Cell.PATH:
+				return Color.WHITE;
+			default: // Unknown cells, or picture cells
+				return Color.BLACK;
 		}
 	}
 
-	/**
-	 * Label permanent flag as "P" on GUI.
-	 * 
-	 * @param currCell
-	 * @param jl
-	 */
-	private void labelPermanentFlag(Cell currCell, JLabel jl) {
+	//Label permanent flag as "P" on GUI.
+	private void labelPermanentFlag(Cell curCell, JLabel jl) {
 		/* Show isPermanent flag */
-		if (currCell.isPermanentCellType()) {
+		if (curCell.isPermanentCellType()) {
 			jl.setForeground(Color.GRAY);
 			jl.setText("P");
-		} else
+		} 
+		else
 			jl.setText("");
 	}
 }

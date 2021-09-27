@@ -23,9 +23,9 @@ public class Coordinate {
 	public void setX(int x) {
 		this.x = x;
 	}
-	/**
-	 * Object hash code contract for use in a HashMap.
-	 */
+
+	
+	//Object hash code contract for use in a HashMap.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -35,9 +35,8 @@ public class Coordinate {
 		return result;
 	}
 
-	/**
-	 * Object equals contract for use in a HashMap.
-	 */
+	
+	//Object equals contract for use in a HashMap.
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

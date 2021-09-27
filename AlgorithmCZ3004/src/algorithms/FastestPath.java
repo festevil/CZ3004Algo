@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 
 import entities.Cell;
 import entities.Coordinate;
+import entities.DirectedCoordinate;
 import entities.Map;
 import entities.Node;
 import entities.Robot;
@@ -25,8 +26,23 @@ public class FastestPath {
 	public FastestPath(Map currMap, Coordinate startCoord, Coordinate goalCoord) {
 		this.startCoord = startCoord;
 		this.goalCoord = goalCoord;
+		initialization(currMap);
+	}
 
-		/* Step 1: Create graph of nodes with heuristic */
+	public FastestPath(Map currMap, DirectedCoordinate startCoord, DirectedCoordinate goalCoord) {
+		this.startCoord = new Coordinate(startCoord.getY(), startCoord.getX());
+		this.goalCoord = new Coordinate(goalCoord.getY(), goalCoord.getX());
+		initialization(currMap);
+	}
+
+	public FastestPath(Map currMap, Cell startCell, Cell goalCell) {
+		this.startCoord = new Coordinate(startCell.getY(), startCell.getX());
+		this.goalCoord = new Coordinate(goalCell.getY(), goalCell.getX());
+		initialization(currMap);
+	}
+
+	public void initialization(Map currMap) {
+		// Step 1: Create graph of nodes with heuristic
 		for (int y = 1; y <= Map.maxY - 2; y++) {
 			for (int x = 1; x <= Map.maxX - 2; x++) {
 				Coordinate currPos = new Coordinate(y, x);
@@ -58,17 +74,12 @@ public class FastestPath {
 				}
 			}
 		}
-		//System.out.println("FastestPath: " + nodes.size() + " nodes");
 
-		int totalEdges = 0;
-		/* Step 2: Link nodes with edges */
+		// Step 2: Link nodes with edges
 		for (HashMap.Entry<Coordinate, Node> entry : nodes.entrySet()) {
 			ArrayList<Node> neighbours = getNeighbours(entry.getValue());
 			edges.put(entry.getValue(), neighbours);
-
-			totalEdges += neighbours.size();
 		}
-		//System.out.println("FastestPath: " + totalEdges + " edges");
 	}
 
 	public ArrayList<Node> runAStar() {
@@ -91,24 +102,24 @@ public class FastestPath {
 			if (!currNode.isVisited()) {
 				currNode.setVisited(true);
 
-				/* Check if it is Goal Node, BREAK! */
+				// Check if it is Goal Node, BREAK!
 				if (currNode.equals(goalNode)) {
 					this.finalPath = genFinalPath(goalNode, childParent);
 					return this.finalPath;
 				}
 
-				/* Check neighbours */
+				// Check neighbours
 				ArrayList<Node> neighbours = getNeighbours(currNode);
 				for (int i = 0; i < neighbours.size(); i++) {
 					Node neighbourNode = neighbours.get(i);
 
-					/* Only traverse currNeighbour if it is unvisited */
+					// Only traverse currNeighbour if it is unvisited
 					if (!neighbourNode.isVisited()) {
 						// Determine weight based on actual robot movement
 						int weight = determineWeight(childParent.get(currNode), neighbourNode);
 						int newTotalCost = currNode.getDistanceToStart() + weight + neighbourNode.getHeuristic();
 
-						/* Only traverse currNeighbour if new totalCost is lower */
+						// Only traverse currNeighbour if new totalCost is lower
 						if (newTotalCost < neighbourNode.getTotalCost()) {
 							childParent.put(neighbourNode, currNode);
 
@@ -121,18 +132,12 @@ public class FastestPath {
 				}
 			}
 		}
-
 		System.err.println("FastestPath: A*Star is unable to find a path to goal node.");
 		this.finalPath = new ArrayList<Node>();
 		return this.finalPath;	// No paths found, return empty list
 	}
 
-	/**
-	 * Generate navigation per step based. Call <tt>StandbyFastestPath</tt> runnable first.
-	 * 
-	 * @param robot
-	 * @return
-	 */
+	//Generate navigation per step based. Call StandbyFastestPath runnable first.
 	public LinkedList<String> navigateSteps() {
 
 		LinkedList<String> fastestPathBuilder = new LinkedList<String>();
@@ -144,7 +149,7 @@ public class FastestPath {
 
 		Robot virtualRobot;
 
-		/* Create a Virtual robot for reference */
+		// Create a Virtual robot for reference
 		// Fastest Path goes North
 		if (finalPath.get(1).getCell().getY() == 2 && finalPath.get(1).getCell().getX() == 1) {
 			virtualRobot = new Robot(new Coordinate(1, 1), Robot.EAST, false);
@@ -155,7 +160,7 @@ public class FastestPath {
 			virtualRobot = new Robot(new Coordinate(1, 1), Robot.EAST, false);
 		}
 
-		/* Traverse from 2nd step (from index 1) */
+		// Traverse from 2nd step (from index 1)
 		for (int i = 1; i < finalPath.size(); i++) {
 			Coordinate[] footprint = virtualRobot.getFootprint();
 
@@ -164,23 +169,21 @@ public class FastestPath {
 
 			if (nextCoord.equals(footprint[Robot.FRONT_CENTER])) {
 				fastestPathBuilder.add("F01");
-
 				virtualRobot.moveForward(1);
-			} else if (nextCoord.equals(footprint[Robot.MIDDLE_RIGHT])) {
+			} 
+			else if (nextCoord.equals(footprint[Robot.MIDDLE_RIGHT])) {
 				fastestPathBuilder.add("R90");
 				fastestPathBuilder.add("F01");
-
 				virtualRobot.rotate(Rotate.RIGHT);
 				virtualRobot.moveForward(1);
-			} else if (nextCoord.equals(footprint[Robot.MIDDLE_LEFT])) {
+			} 
+			else if (nextCoord.equals(footprint[Robot.MIDDLE_LEFT])) {
 				fastestPathBuilder.add("L90");
 				fastestPathBuilder.add("F01");
-
 				virtualRobot.rotate(Rotate.LEFT);
 				virtualRobot.moveForward(1);
 			}
 		}
-
 		return fastestPathBuilder;
 	}
 
@@ -207,13 +210,7 @@ public class FastestPath {
 		return toReturn;
 	}
 
-	/**
-	 * Reconstruct final path based on childParent relation
-	 * 
-	 * @param n
-	 * @param childParent
-	 * @return
-	 */
+	//Reconstruct final path based on childParent relation
 	private ArrayList<Node> genFinalPath(Node n, HashMap<Node, Node> childParent) {
 		ArrayList<Node> toReturn = new ArrayList<Node>();
 
@@ -229,13 +226,7 @@ public class FastestPath {
 		return toReturn;
 	}
 
-	/**
-	 * Determine weight based on actual robot movement. That is, penalise whenever rotation is required.
-	 * 
-	 * @param currNodeParent
-	 * @param neighbourNode
-	 * @return
-	 */
+	//Determine weight based on actual robot movement. That is, penalise whenever rotation is required.
 	private int determineWeight(Node currNodeParent, Node neighbourNode) {
 		// parent2 does not exist, default weight
 		if (currNodeParent == null)
