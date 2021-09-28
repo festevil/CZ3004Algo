@@ -18,9 +18,14 @@ class client {
 	public static FastestPath fp;
     public static VisitNode vn;
 	public static void main(String args[]) throws Exception {
-		realrobot = new Robot(new Coordinate(1,1),2, true);
+		realrobot = new Robot(new Coordinate(1,1),1, true);
 		boolean stop;
 		testmap = new Map("simulationtest.txt");
+		MoveThread test = new MoveThread();
+		String teststring = test.AndroidString();
+		System.out.println(teststring);
+		String teststring2 = test.STMString();
+		System.out.println(teststring2);
 		while(true){     
 			try {
 			stop = true;

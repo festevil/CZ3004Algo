@@ -32,8 +32,6 @@ public class MainFile {
         robot = new Robot(isRealRun); // Default starting position of robot (1,1 facing East)
 
         exploredMap = new Map("simulationtest.txt");	// Set exploredMap (starts from an unknown state)
-        gui = new GUI(robot, exploredMap);
-
         if (isRealRun) {
 			gui.setModeColour(false);
 			comms = new TCPComm();		// Initialise TCP Communication (Will wait...)

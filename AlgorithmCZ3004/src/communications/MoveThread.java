@@ -34,7 +34,6 @@ public class MoveThread {
 		fp = client.fp;
 		msg2 = "STM:";
 	}
-	
 	public String AndroidString() {
 		ArrayList<DirectedCoordinate> coorList = pf.findShortestPath(testMap.getPictureCellList(), robot.getcurPos(), robot.getcurDir());
 		msg = "AD: ";
@@ -47,8 +46,9 @@ public class MoveThread {
 			for (int j = 0; j < fastest.size(); j++) {
 				Node n = fastest.get(j);
 				msg2 = msg2 + vn.OneStepSTM(n.getCell().getX(), n.getCell().getY());
-				msg2 = msg2 + vn.OneStepSTM(n.getCell().getX(), n.getCell().getY());
+				
 				msg = msg + vn.OneStepAndroid(n.getCell().getX(), n.getCell().getY());
+				msg2 = msg2 + vn.OneStepSTM(n.getCell().getX(), n.getCell().getY());
 				msg = msg + vn.OneStepAndroid(n.getCell().getX(), n.getCell().getY());
 			
 			}
