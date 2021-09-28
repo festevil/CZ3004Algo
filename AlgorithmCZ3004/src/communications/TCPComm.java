@@ -46,7 +46,7 @@ public class TCPComm {
 	public void send(char recipient, String message) {
 		try {
 			if (this.clientSocket != null) {
-				String outgoingString = "@" + recipient + message + "!";
+				String outgoingString = "@" + recipient + message + "!";//Message tells android commands e.g. r is reverse
 				this.outgoingStream.writeBytes(outgoingString);
 				System.out.println("TCP Sent: " + outgoingString);
 			}

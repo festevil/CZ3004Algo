@@ -19,7 +19,7 @@ public class Map {
 	public Map() {
 		// Initialize cells
 		cells = new Cell[maxY][maxX];
-		startCoord = new Coordinate(1, 2);
+		startCoord = new Coordinate(1, 1);
 		// Initialize each cell
 		for (int y = maxY - 1; y >= 0; y--) {
 			for (int x = 0; x < maxX; x++) {

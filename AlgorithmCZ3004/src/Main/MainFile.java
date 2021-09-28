@@ -11,7 +11,7 @@ import communications.TCPComm;
 public class MainFile {
 
     // Set Mode here
-    public static boolean isRealRun = true;
+    public static boolean isRealRun = false;
 
     // Shared Variables
     public static Robot robot;
