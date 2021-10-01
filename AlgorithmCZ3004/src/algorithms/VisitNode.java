@@ -16,89 +16,85 @@ public class VisitNode {
 	}
 
 	public void visitnodeOneStep(int x, int y) {
-		curPos = robot.getcurPos();
-		curDir = robot.getcurDir();
-		if (x > curPos.getX()) {
-			switch(curDir) {
-				case Robot.EAST:
-					robot.moveForward(1);
-					break;
-				case Robot.NORTH:
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.SOUTH:
-					robot.rotate(Rotate.LEFT);
-					robot.moveForward(1);
-					break;
-				case Robot.WEST:
-					robot.rotate(Rotate.RIGHT);
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
+			curPos = robot.getcurPos();
+			curDir = robot.getcurDir();
+			if (x > curPos.getX()) {
+				switch(curDir) {
+					case Robot.EAST:
+						robot.moveForward(1);
+					    return;		
+					case Robot.NORTH:
+						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
+						return;			
+					case Robot.SOUTH:
+						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
+						return;						
+					case Robot.WEST:
+						robot.moveForward(-1);
+						return;
+				}
+			}
+			if (x < curPos.getX()) {
+				switch(curDir) {
+					case Robot.EAST:
+						robot.moveForward(-1);
+						return;
+						
+					case Robot.NORTH:
+						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
+						return;		
+						
+					case Robot.SOUTH:
+						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
+						return;	
+						
+					case Robot.WEST:
+						robot.moveForward(1);
+						return;	
+				}
+			}
+			if (y > curPos.getY()) {
+				switch(curDir) {
+					case Robot.EAST:
+						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
+						return;	
+					case Robot.NORTH:
+						robot.moveForward(1);
+						return;	
+					case Robot.SOUTH:
+						robot.moveForward(-1);
+						
+						return;	
+					case Robot.WEST:
+						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
+						return;	
+				}
+			}
+			if (y < curPos.getY()) {
+				switch(curDir) {
+					case Robot.EAST:
+						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
+						return;					
+					case Robot.NORTH:
+						robot.moveForward(-1);
+						return;	
+					case Robot.SOUTH:
+						robot.moveForward(1);
+						return;	
+					case Robot.WEST:
+						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
+						return;	
+				}
 			}
 		}
-		if (x < curPos.getX()) {
-			switch(curDir) {
-				case Robot.EAST:
-					robot.rotate(Rotate.RIGHT);
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.NORTH:
-					robot.rotate(Rotate.LEFT);
-					robot.moveForward(1);
-					break;
-				case Robot.SOUTH:
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.WEST:
-					robot.moveForward(1);
-					break;
-			}
-		}
-		if (y > curPos.getY()) {
-			switch(curDir) {
-				case Robot.EAST:
-					robot.rotate(Rotate.LEFT);
-					robot.moveForward(1);
-					break;
-				case Robot.NORTH:
-					robot.moveForward(1);
-					break;
-				case Robot.SOUTH:
-					robot.rotate(Rotate.RIGHT);
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.WEST:
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-			}
-		}
-		if (y < curPos.getY()) {
-			switch(curDir) {
-				case Robot.EAST:
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.NORTH:
-					robot.rotate(Rotate.RIGHT);
-					robot.rotate(Rotate.RIGHT);
-					robot.moveForward(1);
-					break;
-				case Robot.SOUTH:
-					robot.moveForward(1);
-					break;
-				case Robot.WEST:
-					robot.rotate(Rotate.LEFT);
-					robot.moveForward(1);
-					break;
-			}
-		}	
-	}
 
 	public void directionRotate(int direction) {
 		curDir = robot.getcurDir();
@@ -166,7 +162,6 @@ public class VisitNode {
 					break;
 			}
 		}
-		
 	}
 		public String OneStepAndroid(int x, int y) {
 			curPos = robot.getcurPos();
@@ -178,27 +173,31 @@ public class VisitNode {
 						return "f";						
 					case Robot.NORTH:
 						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
 						return "tr";						
 					case Robot.SOUTH:
 						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
 						return "tl";						
 					case Robot.WEST:
-						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						robot.moveForward(-1);
+						return "r";
 				}
 			}
 			if (x < curPos.getX()) {
 				switch(curDir) {
 					case Robot.EAST:
-						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						robot.moveForward(-1);
+						return "r";
 						
 					case Robot.NORTH:
 						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
 						return "tl";		
 						
 					case Robot.SOUTH:
 						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
 						return "tr";	
 						
 					case Robot.WEST:
@@ -210,15 +209,18 @@ public class VisitNode {
 				switch(curDir) {
 					case Robot.EAST:
 						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
 						return "tl";	
 					case Robot.NORTH:
 						robot.moveForward(1);
 						return "f";	
 					case Robot.SOUTH:
-						robot.rotate(Rotate.RIGHT);
-						return "tr";	
+						robot.moveForward(-1);
+						
+						return "r";	
 					case Robot.WEST:
 						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
 						return "tr";	
 				}
 			}
@@ -226,15 +228,17 @@ public class VisitNode {
 				switch(curDir) {
 					case Robot.EAST:
 						robot.rotate(Rotate.RIGHT);
+						robot.moveForward(1);
 						return "tr";	
 					case Robot.NORTH:
-						robot.rotate(Rotate.RIGHT);
-						return "tr";	
+						robot.moveForward(-1);
+						return "r";	
 					case Robot.SOUTH:
 						robot.moveForward(1);
 						return "f";	
 					case Robot.WEST:
 						robot.rotate(Rotate.LEFT);
+						robot.moveForward(1);
 						return "tl";	
 				}
 			}
@@ -248,7 +252,7 @@ public class VisitNode {
 						break;
 					case Robot.SOUTH:
 						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						return "r";
 					case Robot.EAST:
 						robot.rotate(Rotate.LEFT);
 						return "tl";
@@ -305,10 +309,6 @@ public class VisitNode {
 			return "tr";
 		}
 		
-		
-		
-		
-		
 		public String STMRotate(int direction) {
 			curDir = robot.getcurDir();
 			if (direction == Robot.NORTH) {
@@ -316,11 +316,11 @@ public class VisitNode {
 					case Robot.NORTH:
 						break;
 					case Robot.SOUTH:
-						return "d";
+						return "xxdxxxxdxx";
 					case Robot.EAST:
-						return "a";
+						return "xxaxx";
 					case Robot.WEST:
-						return "d";
+						return "xxdxx";
 				}
 			}
 			if (direction == Robot.EAST) {
@@ -328,11 +328,11 @@ public class VisitNode {
 					case Robot.EAST:
 						break;
 					case Robot.WEST:
-						return "d";
+						return "xxdxxxxdxx";
 					case Robot.SOUTH:
-						return "a";
+						return "xxaxx";
 					case Robot.NORTH:
-						return "d";
+						return "xxdxx";
 				}
 			}
 			if (direction == Robot.SOUTH) {
@@ -340,13 +340,13 @@ public class VisitNode {
 					case Robot.SOUTH:
 						break;
 					case Robot.NORTH:
-						return "d";
+						return "xxdxxxxdxx";
 					case Robot.WEST:
 						robot.rotate(Rotate.LEFT);
-						return "a";
+						return "xxaxx";
 					case Robot.EAST:
 						robot.rotate(Rotate.RIGHT);
-						return "d";
+						return "xxdxx";
 				}
 			}
 			if (direction == Robot.WEST) {
@@ -354,11 +354,11 @@ public class VisitNode {
 					case Robot.WEST:
 						break;
 					case Robot.EAST:
-						return "d";
+						return "xxdxxxxdxx";
 					case Robot.SOUTH:
-						return "d";
+						return "xxdxx";
 					case Robot.NORTH:
-						return "a";
+						return "xxaxx";
 				}
 			}
 			return "";
@@ -371,23 +371,23 @@ public class VisitNode {
 					case Robot.EAST:
 						return "w";						
 					case Robot.NORTH:
-						return "d";						
+						return "xxdx";						
 					case Robot.SOUTH:
-						return "a";						
+						return "xxax";						
 					case Robot.WEST:
-						return "d";
+						return "x";
 				}
 			}
 			if (x < curPos.getX()) {
 				switch(curDir) {
 					case Robot.EAST:
-						return "d";
+						return "x";
 						
 					case Robot.NORTH:
-						return "a";		
+						return "xxax";		
 						
 					case Robot.SOUTH:
-						return "d";	
+						return "xxdx";	
 						
 					case Robot.WEST:
 						return "w";	
@@ -396,25 +396,25 @@ public class VisitNode {
 			if (y > curPos.getY()) {
 				switch(curDir) {
 					case Robot.EAST:
-						return "a";	
+						return "xxax";	
 					case Robot.NORTH:
 						return "w";	
 					case Robot.SOUTH:
-						return "d";	
+						return "x";	
 					case Robot.WEST:
-						return "d";	
+						return "xxdx";	
 				}
 			}
 			if (y < curPos.getY()) {
 				switch(curDir) {
 					case Robot.EAST:
-						return "d";	
+						return "xxdx";	
 					case Robot.NORTH:
-						return "d";	
+						return "x";	
 					case Robot.SOUTH:
 						return "w";	
 					case Robot.WEST:
-						return "a";	
+						return "xxax";	
 				}
 			}
 			return "";
