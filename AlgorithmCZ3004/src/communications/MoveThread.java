@@ -1,18 +1,15 @@
 package communications;
 
-import entities.Coordinate;
 import entities.DirectedCoordinate;
 import entities.Map;
 import entities.Node;
 import entities.Robot;
-import gui.GUI;
 
 import java.util.ArrayList;
 
-import Main.MainFile;
 import algorithms.FastestPath;
 import algorithms.VisitNode;
-import algorithms.PathFinder;
+import algorithms.HamiltonianPathFinder;
 
 public class MoveThread {
 
@@ -20,10 +17,10 @@ public class MoveThread {
 	private Map testMap;
 	private VisitNode vn;
 	private FastestPath fp;
-	private PathFinder pf = new PathFinder();
+	private HamiltonianPathFinder pf = new HamiltonianPathFinder();
 
-	private String msg;
-	private static String msg2;
+	private ArrayList<String> msgAndroid = new ArrayList<>();
+	private ArrayList<String> msgSTM = new ArrayList<>();
 
 	public MoveThread() {
 		this.testMap = client.testmap;
@@ -32,34 +29,46 @@ public class MoveThread {
 		robot = client.realrobot;
 		vn = client.vn;
 		fp = client.fp;
-		msg2 = "STM:";
+	}
+
+	public ArrayList<String> AndroidString() {
+		if (msgAndroid.isEmpty()) 
+			initializeString();
+		return msgAndroid;
+	}
+
+	public ArrayList<String> STMString() {
+		if (msgSTM.isEmpty()) 
+			initializeString();
+		return msgSTM;
 	}
 	
-	public String AndroidString() {
+	private void initializeString() {
 		ArrayList<DirectedCoordinate> coorList = pf.findShortestPath(testMap.getPictureCellList(), robot.getcurPos(), robot.getcurDir());
-		msg = "AD: ";
+		StringBuilder buildAndroid = new StringBuilder();
+		StringBuilder buildSTM = new StringBuilder();
 		for (int i = 0; i < coorList.size() - 1; i++) {
 			
 			//Use A* Star to move the robot from startCoor to endCoor
 			fp = new FastestPath(testMap, coorList.get(i), coorList.get(i+1));
 			ArrayList<Node> fastest = fp.runAStar();
 			vn = new VisitNode(robot);
+
 			for (int j = 0; j < fastest.size(); j++) {
 				Node n = fastest.get(j);
-				msg2 = msg2 + vn.OneStepSTM(n.getCell().getX(), n.getCell().getY());
-				msg = msg + vn.OneStepAndroid(n.getCell().getX(), n.getCell().getY());
-				
-			
+				String STMchar = vn.OneStepSTM(n.getCell().getX(), n.getCell().getY());
+				buildSTM.append(STMchar);
+				buildAndroid.append(vn.OneStepAndroid(n.getCell().getX(), n.getCell().getY()));
 			}
-			msg2 = msg2 + vn.STMRotate(coorList.get(i+1).getDir());
-			msg = msg + vn.AndroidRotate(coorList.get(i+1).getDir());
-		}
-		System.out.println(msg);
-		return msg;
 			
-	}
-	public String STMString() {
-		return msg2;
+			buildSTM.append(vn.STMRotate(coorList.get(i+1).getDir()));
+			buildAndroid.append(vn.AndroidRotate(coorList.get(i+1).getDir()));
+			buildAndroid.append(vn.AndroidRotate(coorList.get(i+1).getDir()));
+			msgAndroid.add(buildAndroid.toString());
+			msgSTM.add(buildSTM.toString());
+			buildSTM.setLength(0);
+			buildAndroid.setLength(0);
+		}
 	}
 }
 
