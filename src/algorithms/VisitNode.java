@@ -252,7 +252,8 @@ public class VisitNode {
 						break;
 					case Robot.SOUTH:
 						robot.rotate(Rotate.RIGHT);
-						return "r";
+						robot.rotate(Rotate.RIGHT);
+						return "trtr";
 					case Robot.EAST:
 						robot.rotate(Rotate.LEFT);
 						return "tl";
@@ -267,7 +268,8 @@ public class VisitNode {
 						break;
 					case Robot.WEST:
 						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						robot.rotate(Rotate.RIGHT);
+						return "trtr";
 					case Robot.SOUTH:
 						robot.rotate(Rotate.LEFT);
 						return "tl";
@@ -282,7 +284,8 @@ public class VisitNode {
 						break;
 					case Robot.NORTH:
 						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						robot.rotate(Rotate.RIGHT);
+						return "trtr";
 					case Robot.WEST:
 						robot.rotate(Rotate.LEFT);
 						return "tl";
@@ -297,7 +300,8 @@ public class VisitNode {
 						break;
 					case Robot.EAST:
 						robot.rotate(Rotate.RIGHT);
-						return "tr";
+						robot.rotate(Rotate.RIGHT);
+						return "trtr";
 					case Robot.SOUTH:
 						robot.rotate(Rotate.RIGHT);
 						return "tr";
