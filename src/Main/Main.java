@@ -21,8 +21,8 @@ import algorithms.FastestPathV2;
 public class Main {
 
     // Set Mode here
-    public static boolean isRealRun = false;
-    public static int padding = 3;
+    public static boolean isRealRun = true;
+    public static int padding = 5;
 
     // Shared Variables
     public static Robot robot;
@@ -82,40 +82,43 @@ public class Main {
 
                         while (receive == null) {
                             receive = handshake.readLine();
+                            break;
                         }
                         
                         String receiveList[] = receive.split(",");
 
                         switch (receiveList[0]) {
                             case "ADD":
-                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) - padding;
+                                // maxY + 2 * padding, then - padding
+                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) + padding;
                                 tempX = Integer.parseInt(receiveList[1]) + padding;
                                 curMap.setCellType(tempY, tempX, Cell.WALL);
                                 break;
                             case "SUB":
-                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) - padding;
+                                // maxY + 2 * padding, then - padding  
+                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) + padding;
                                 tempX = Integer.parseInt(receiveList[1]) + padding;
                                 curMap.delPictureCell(tempY, tempX);
                                 break;
                             case "FACE":
-                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) - padding;
+                                // maxY + 2 * padding, then - padding 
+                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) + padding;
                                 tempX = Integer.parseInt(receiveList[1]) + padding;
                                 curMap.setCellType(tempY, tempX, cellDirMap.get(receiveList[3]));
                                 break;
                             case "ROBOT":
-                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) - padding;
+                                // maxY + 2 * padding, then - padding 
+                                tempY = Map.maxY - 1 - Integer.parseInt(receiveList[2]) + padding;
                                 tempX = Integer.parseInt(receiveList[1]) + padding;
                                 robot.setCurPos(tempY, tempX);
                                 robot.setCurDir(robotDirMap.get(receiveList[3]).intValue());
                                 break;
                             case "TARGET":
                                 int imageId = Integer.parseInt(receiveList[1]);
-                                if (imageId == 0) {
-                                    curCellIndex++;
-                                }
                                 // Cannot call TARGET before START, or else error. Need to figure this out later...
                                 ArrayList<CellCoorPair> coorMap = calculation.getCoorMap();
                                 try {
+                                    // - padding since maxY is 20, not 20 + 2 * padding
                                     tempY = Map.maxY - 1 - coorMap.get(curCellIndex).getCell().getY() + padding;
                                     tempX = coorMap.get(curCellIndex).getCell().getX() - padding;
                                     String toSend = "TARGET," + tempX + "," + tempY + "," + imageId + ","

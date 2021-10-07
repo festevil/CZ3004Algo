@@ -6,13 +6,12 @@ import entities.Cell;
 import entities.Coordinate;
 import entities.Map;
 import entities.Robot;
+
 import Main.Main;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import Main.Main;
 
 public class GUI extends JFrame {
 

@@ -64,7 +64,7 @@ public class Coordinate {
 	 */
 	public String toStringActual(int padding) {
 		int tempY = this.getY() - padding;
-		int tempX = this.getY() - padding;
+		int tempX = this.getX() - padding;
 		return "Y: " + tempY + ", X: " + tempX + ", type: ";
 	}
 }

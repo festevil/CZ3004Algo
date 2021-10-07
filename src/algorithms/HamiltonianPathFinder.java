@@ -56,22 +56,19 @@ public class HamiltonianPathFinder {
         // Adding new coordinates from cell list. Note that this depicts the position and rotation of the robot.
         for (int i = 0; i < pictureCellList.size(); i++) {
             Cell curCell = pictureCellList.get(i);
+            int distToObserve = 4;
             switch(curCell.getCellType()) {
                 case 'A':
-                    int plusY = 3;
-                    coorList.add(new DirectedCoor(curCell.getY() + plusY, curCell.getX(), DirectedCoor.SOUTH));
+                    coorList.add(new DirectedCoor(curCell.getY() + distToObserve, curCell.getX(), DirectedCoor.SOUTH));
                     break;
                 case 'B':
-                    int plusX = 3;
-                    coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() + plusX, DirectedCoor.WEST));
+                    coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() + distToObserve, DirectedCoor.WEST));
                     break;
                 case 'C':
-                    int minusY = 3;
-                    coorList.add(new DirectedCoor(curCell.getY() - minusY, curCell.getX(), DirectedCoor.NORTH));
+                    coorList.add(new DirectedCoor(curCell.getY() - distToObserve, curCell.getX(), DirectedCoor.NORTH));
                     break;
                 case 'D':
-                    int minusX = 3;
-                    coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() - minusX, DirectedCoor.EAST));
+                    coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() - distToObserve, DirectedCoor.EAST));
                     break;
             }
         }

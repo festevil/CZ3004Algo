@@ -187,7 +187,7 @@ public class FastestPathV2 {
 
 		// curCell and nextCell are on different axis, induce penalty (turning)
 		// How much should turning cost?
-		return 6;
+		return 5;
 	}
 
 	/**
