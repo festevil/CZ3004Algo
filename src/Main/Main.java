@@ -155,7 +155,7 @@ public class Main {
 
         //Simulation mode
         else {
-            curMap = new Map("test6.txt");
+            curMap = new Map("test7.txt");
             gui.refreshGUI(robot, curMap);
         }
     }
