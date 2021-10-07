@@ -257,7 +257,7 @@ public class FastestPathV2 {
 
 		// Is there anyway to improve this??
 
-		if (y2 - y == 2 || x2 - x == 2) {
+		if (y2 - y == 2 && x2 - x == 2) {
 			switch(curNode.getDir()) {
 				case Node.NORTH:	//nextNode is EAST
 					return isValidPlacement(new Coordinate(y2, x2 + 1), curMap) && 
@@ -270,7 +270,7 @@ public class FastestPathV2 {
 			}
 		}
 
-		if (y2 - y == 2 || x2 - x == -2) {
+		if (y2 - y == 2 && x2 - x == -2) {
 			switch(curNode.getDir()) {
 				case Node.NORTH:
 					return isValidPlacement(new Coordinate(y2, x2 - 1), curMap) && 
@@ -283,7 +283,7 @@ public class FastestPathV2 {
 			}
 		}
 
-		if (y2 - y == -2 || x2 - x == 2) {
+		if (y2 - y == -2 && x2 - x == 2) {
 			switch(curNode.getDir()) {
 				case Node.SOUTH:
 					return isValidPlacement(new Coordinate(y2, x2 + 1), curMap) && 
@@ -296,7 +296,7 @@ public class FastestPathV2 {
 			}
 		}
 
-		if (y2 - y == -2 || x2 - x == -2) {
+		if (y2 - y == -2 && x2 - x == -2) {
 			switch(curNode.getDir()) {
 				case Node.SOUTH:
 					return isValidPlacement(new Coordinate(y2, x2 - 1), curMap) && 
