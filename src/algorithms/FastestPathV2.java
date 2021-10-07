@@ -184,7 +184,8 @@ public class FastestPathV2 {
 			return 1;
 
 		// curCell and nextCell are on different axis, induce penalty (turning)
-		return 5;
+		// How much should turning cost?
+		return 6;
 	}
 
 	/**
@@ -261,11 +262,11 @@ public class FastestPathV2 {
 				case Node.NORTH:	//nextNode is EAST
 					return isValidPlacement(new Coordinate(y2, x2 + 1), curMap) && 
 						isValidPlacement(new Coordinate(y2 + 1, x), curMap) &&
-						isValidPlacement(new Coordinate(x + 1, y + 1), curMap);
+						isValidPlacement(new Coordinate(y + 1, x + 1), curMap);
 				case Node.EAST:		//nextNode is NORTH
 					return isValidPlacement(new Coordinate(y2 + 1, x2), curMap) && 
 						isValidPlacement(new Coordinate(y, x2 + 1), curMap) &&
-						isValidPlacement(new Coordinate(x + 1, y + 1), curMap);
+						isValidPlacement(new Coordinate(y + 1, x + 1), curMap);
 			}
 		}
 
@@ -274,11 +275,11 @@ public class FastestPathV2 {
 				case Node.NORTH:
 					return isValidPlacement(new Coordinate(y2, x2 - 1), curMap) && 
 						isValidPlacement(new Coordinate(y2 + 1, x), curMap) &&
-						isValidPlacement(new Coordinate(x - 1, y + 1), curMap);
+						isValidPlacement(new Coordinate(y + 1, x - 1), curMap);
 				case Node.WEST:
 					return isValidPlacement(new Coordinate(y2 + 1, x2), curMap) && 
 						isValidPlacement(new Coordinate(y, x2 - 1), curMap) &&
-						isValidPlacement(new Coordinate(x - 1, y + 1), curMap);
+						isValidPlacement(new Coordinate(y + 1, x - 1), curMap);
 			}
 		}
 
@@ -287,11 +288,11 @@ public class FastestPathV2 {
 				case Node.SOUTH:
 					return isValidPlacement(new Coordinate(y2, x2 + 1), curMap) && 
 						isValidPlacement(new Coordinate(y2 - 1, x), curMap) &&
-						isValidPlacement(new Coordinate(x + 1, y - 1), curMap);
+						isValidPlacement(new Coordinate(y - 1, x + 1), curMap);
 				case Node.EAST:
 					return isValidPlacement(new Coordinate(y2 - 1, x2), curMap) && 
 						isValidPlacement(new Coordinate(y, x2 + 1), curMap) &&
-						isValidPlacement(new Coordinate(x + 1, y - 1), curMap);
+						isValidPlacement(new Coordinate(y - 1, x + 1), curMap);
 			}
 		}
 
@@ -300,11 +301,11 @@ public class FastestPathV2 {
 				case Node.SOUTH:
 					return isValidPlacement(new Coordinate(y2, x2 - 1), curMap) && 
 						isValidPlacement(new Coordinate(y2 - 1, x), curMap) &&
-						isValidPlacement(new Coordinate(x - 1, y - 1), curMap);
+						isValidPlacement(new Coordinate(y - 1, x - 1), curMap);
 				case Node.WEST:
 					return isValidPlacement(new Coordinate(y2 - 1, x2), curMap) && 
 						isValidPlacement(new Coordinate(y, x2 - 1), curMap) &&
-						isValidPlacement(new Coordinate(x - 1, y - 1), curMap);
+						isValidPlacement(new Coordinate(y - 1, x - 1), curMap);
 			}
 		}
 
@@ -314,23 +315,23 @@ public class FastestPathV2 {
 
 	/**
 	 * Check if the robot can be placed on this spot or not.
-	 * We do this by making a virtual robot, then check if its footprint touches any Wall cell.
+	 * Note that since out-of-bound moves are acceptable, this now only checks for collision.
 	 * @param curPos
 	 * @param curMap
 	 * @return Whether this is a valid placement w/ no collision.
 	 */
 	private boolean isValidPlacement(Coordinate curPos, Map curMap) {
-		if (curPos.getY() < 1 || curPos.getY() > Map.maxY - 2)
-			return false;
+		ArrayList<Coordinate> surroundingCoor = new ArrayList<>();
+		for (int dy = -1; dy <= 1; dy++) {
+			for (int dx = -1; dx <= 1; dx++) {
+				if (curPos.getY() + dy >= 0 && curPos.getY() + dy <= Map.maxY - 1
+					&& curPos.getX() + dx >= 0 && curPos.getX() + dx <= Map.maxX - 1)
+					surroundingCoor.add(new Coordinate(curPos.getY() + dy, curPos.getX() + dx));
+			}
+		}
 		
-		if (curPos.getX() < 1 || curPos.getX() > Map.maxX - 2)
-			return false;
-		
-		Robot virRobot = new Robot(curPos, Robot.EAST, false);
-		Coordinate[] robotFootprint = virRobot.getFootprint();
-		
-		for (int i = 0; i < robotFootprint.length; i++) {
-			Cell c = curMap.getCell(robotFootprint[i]);
+		for (int i = 0; i < surroundingCoor.size(); i++) {
+			Cell c = curMap.getCell(surroundingCoor.get(i));
 			if (c.getCellType() == Cell.WALL || c.getCellType() == Cell.NORTHWALL ||
 			c.getCellType() == Cell.EASTWALL || c.getCellType() == Cell.SOUTHWALL ||
 			c.getCellType() == Cell.WESTWALL) {

@@ -58,6 +58,8 @@ public class RealMovementCalculation {
 		StringBuilder buildAndroid = new StringBuilder(1000);
 		StringBuilder buildSTM = new StringBuilder(1000);
 
+		//buildSTM.append("c");
+
 		for (int i = 0; i < coorMap.size() - 1; i++) {
 			
 			//Use A* Star to move the robot from startCoor to endCoor
@@ -108,7 +110,7 @@ public class RealMovementCalculation {
 		
 		msgSTM = msgSTM.replace("xxxwww","").replace("xxww","").replace("xw","");
 		msgSTM = msgSTM.replace("wwwxxx","").replace("wwxx","").replace("wx","");
-		//msgSTM = msgSTM.replace("xx","1");
+		msgSTM = msgSTM.replace("xxxxx","l").replace("xxxx","k").replace("xxx","j").replace("xx","1");
 		msgSTM = msgSTM.replace("wwwwwwwww","9").replace("wwwwwwww","8").replace("wwwwwww","7").replace("wwwwww","6").replace("wwwww","5").replace("wwww","4").replace("www","3").replace("ww","2");
 
 		msgAndroid = msgAndroid.replace(",x,x,x,w,w,w","").replace(",x,x,w,w","").replace(",x,w","");

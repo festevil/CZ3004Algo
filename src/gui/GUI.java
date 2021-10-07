@@ -169,11 +169,11 @@ public class GUI extends JFrame {
 					mapPanel.add(newCell);
 				} 
 				else if (x == 0) {
-					newCell.setText(Integer.toString(actualY));
+					newCell.setText(Integer.toString(actualY - 3));
 					mapPanel.add(newCell);
 				} 
 				else if (y == 0) {
-					newCell.setText(Integer.toString(actualX));
+					newCell.setText(Integer.toString(actualX - 3));
 					mapPanel.add(newCell);
 				}
 
@@ -339,8 +339,6 @@ public class GUI extends JFrame {
 			case Cell.WALL:
 				return Color.BLACK;
 			case Cell.PATH:
-				return Color.WHITE;
-			case Cell.INVISIWALL:
 				return Color.WHITE;
 			default: // Unknown cells, or picture cells
 				return Color.BLACK;

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Map {
-	public static final int maxY = 20;
-	public static final int maxX = 20;
+	public static final int maxY = 26;
+	public static final int maxX = 26;
 
 	private Cell cells[][];
 	private ArrayList<Cell> pictureCellList = new ArrayList<Cell>(); //for Fastest Hamiltonian Path calculation
 
 	/**
-	 * Map constructor. Default Grid: y=20 by x=20.
+	 * Map constructor. Default Grid: y=20 by x=20. + 3 each side for virtual movement
 	 */
 	public Map() {
 		// Initialize cells
@@ -29,7 +29,7 @@ public class Map {
 	}
 
 	/**
-	 * Map constructor with import. Default Grid: y=20 by x=20.
+	 * Map constructor with import. Default Grid: y=20 by x=20. + 3 each side for virtual movement
 	 * @param fileName
 	 */
 	public Map(String fileName) {
@@ -47,8 +47,9 @@ public class Map {
 			Scanner s = new Scanner(new BufferedReader(new FileReader(filePath.concat("/presets/" + fileName))));
 
 			while (s.hasNext()) {
-				for (int y = maxY - 1; y >= 0; y--) {
-					for (int x = 0; x < maxX; x++) {
+				//+ 3 each side for virtual movement, so -3 when reading maps.
+				for (int y = maxY - 4; y >= 3; y--) {
+					for (int x = 3; x < maxX - 3; x++) {
 						char type = s.next().charAt(0);
 						cells[y][x].setCellType(type);
 						if (type == 'A' || type == 'B' || type == 'C' || type == 'D') {

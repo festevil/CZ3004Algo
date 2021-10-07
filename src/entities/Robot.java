@@ -162,38 +162,38 @@ public class Robot {
 			case NORTH:
 				newPos = curPos.getY() + steps;
 				// Prevents Robot from going out of map boundary
-				if (newPos < Map.maxY - 1) {
+				//if (newPos < Map.maxY - 1) {
 					curPos.setY(newPos);
-				} 
-				else
-					System.out.println(warning);
+				//} 
+				//else
+					//System.out.println(warning);
 				break;
 			case SOUTH:
 				newPos = curPos.getY() - steps;
 				// Prevents Robot from going out of map boundary
-				if (newPos > 0) {
+				// if (newPos > 0) {
 					curPos.setY(newPos);
-				} 
-				else
-					System.out.println(warning);
+				// } 
+				// else
+				// 	System.out.println(warning);
 				break;
 			case EAST:
 				newPos = curPos.getX() + steps;
 				// Prevents Robot from going out of map boundary
-				if (newPos < Map.maxX - 1) {
+				// if (newPos < Map.maxX - 1) {
 					curPos.setX(newPos);
-				} 
-				else
-					System.out.println(warning);
+				// } 
+				// else
+				// 	System.out.println(warning);
 				break;
 			case WEST:
 				newPos = curPos.getX() - steps;
-				// Prevents Robot from going out of map boundary
-				if (newPos > 0) {
+				// // Prevents Robot from going out of map boundary
+				// if (newPos > 0) {
 					curPos.setX(newPos);
-				} 
-				else
-					System.out.println(warning);
+				// } 
+				// else
+				// 	System.out.println(warning);
 				break;
 			default: // Do nothing
 		}

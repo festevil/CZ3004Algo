@@ -23,7 +23,7 @@ import algorithms.FastestPathV2;
 public class Main {
 
     // Set Mode here
-    public static boolean isRealRun = false;
+    public static boolean isRealRun = true;
 
     // Shared Variables
     public static Robot robot;
@@ -36,8 +36,8 @@ public class Main {
     // Simulation Only Variables
     public static Thread tSimExplore;
     public static void main(String[] args) throws Exception {
-        // Initialize Variables & GUI
-        robot = new Robot(new Coordinate(1, 1), Robot.NORTH, isRealRun);    // Default starting position of robot (1,1 facing East)
+        // Initialize Variables & GUI. Note that real map starts at (3, 3) on the Map
+        robot = new Robot(new Coordinate(4, 4), Robot.NORTH, isRealRun);    // Default starting position of robot (1,1 facing East)
         curMap = new Map();                                                 // Set map (starts from an unknown state)
         gui = new GUI(robot, curMap);
         RealMovementCalculation calculation = new RealMovementCalculation();
@@ -90,25 +90,28 @@ public class Main {
 
                         switch (receiveList[0]) {
                             case "ADD":
-                                curMap.setCellType(Map.maxY - 1 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]), Cell.WALL);
+                                curMap.setCellType(Map.maxY - 4 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]) + 3, Cell.WALL);
                                 break;
                             case "SUB":
-                                curMap.delPictureCell(Map.maxY - 1 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]));
+                                curMap.delPictureCell(Map.maxY - 4 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]) + 3);
                                 break;
                             case "FACE":
-                                curMap.setCellType(Map.maxY - 1 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]), cellDirMap.get(receiveList[3]));
+                                curMap.setCellType(Map.maxY - 4 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]) + 3, cellDirMap.get(receiveList[3]));
                                 break;
                             case "ROBOT":
-                                robot.setCurPos(Map.maxY - 1 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]));
+                                robot.setCurPos(Map.maxY - 4 - Integer.parseInt(receiveList[2]), Integer.parseInt(receiveList[1]) + 3);
                                 robot.setCurDir(robotDirMap.get(receiveList[3]).intValue());
                                 break;
                             case "TARGET":
                                 int imageId = Integer.parseInt(receiveList[1]);
+                                if (imageId == 0) {
+                                    curCellIndex++;
+                                }
                                 // Cannot call TARGET before START, or else error. Need to figure this out later...
                                 ArrayList<CellCoorPair> coorMap = calculation.getCoorMap();
                                 try {
-                                    String toSend = "TARGET," + coorMap.get(curCellIndex).getCell().getX() + "," 
-                                        + (Map.maxY - 1 - coorMap.get(curCellIndex).getCell().getY()) + "," + imageId + ","
+                                    String toSend = "TARGET," + (coorMap.get(curCellIndex).getCell().getX() - 3) + "," 
+                                        + (Map.maxY + 2 - coorMap.get(curCellIndex).getCell().getY()) + "," + imageId + ","
                                         + cellDirMapReverse.get(coorMap.get(curCellIndex).getCell().getCellType());
                                     System.out.println("Sent to Android: " + toSend);
                                     output.write("AD:" + toSend);

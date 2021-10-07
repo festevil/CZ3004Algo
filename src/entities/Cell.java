@@ -74,6 +74,6 @@ public class Cell extends Coordinate {
 	 */
 	@Override
 	public String toString() {
-		return "Y: " + this.getY() + ", X: " + this.getX() + ", type: " + this.cellType;
+		return "Y: " + (this.getY()-3) + ", X: " + (this.getX()-3) + ", type: " + this.cellType;
 	}
 }

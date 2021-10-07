@@ -56,7 +56,7 @@ public class Coordinate {
 	 */
 	@Override
 	public String toString() {
-		return "Y: " + this.getY() + ", X: " + this.getX();
+		return "Y: " + (this.getY()-3) + ", X: " + (this.getX()-3);
 	}
 }
 
