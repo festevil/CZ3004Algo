@@ -58,19 +58,6 @@ public class Map {
 				}
 			}
 
-			// for (Cell c: pictureCellList) {
-			// 	int y = c.getY();
-			// 	int x = c.getX();
-			// 	if (y + 1 <= maxY - 1)
-			// 		cells[y + 1][x].setCellType(Cell.INVISIWALL);
-			// 	if (y - 1 >= 0)
-			// 		cells[y - 1][x].setCellType(Cell.INVISIWALL);
-			// 	if (x + 1 <= maxX - 1)
-			// 		cells[y][x + 1].setCellType(Cell.INVISIWALL);
-			// 	if (x - 1 >= 0)
-			// 		cells[y][x - 1].setCellType(Cell.INVISIWALL);
-			// }
-
 			s.close();
 		} 
 		catch (IOException e) {
@@ -100,7 +87,7 @@ public class Map {
 		boolean exist = false;
 
 		if (cellType == Cell.NORTHWALL || cellType == Cell.EASTWALL 
-			|| cellType == Cell.SOUTHWALL || cellType == Cell.EASTWALL) {
+			|| cellType == Cell.SOUTHWALL || cellType == Cell.WESTWALL) {
 			for(Cell c: pictureCellList) {
 				if (c.equals(cells[y][x])) {
 					exist = true;

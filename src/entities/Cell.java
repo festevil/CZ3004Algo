@@ -1,8 +1,8 @@
 package entities;
 
 public class Cell extends Coordinate {
-	public static final char WALL = 'W', START = 'S', GOAL = 'G', PATH = 'P', INVISIWALL = 'F',		//other cells
-		NORTHWALL = 'A', EASTWALL = 'B', SOUTHWALL = 'C', WESTWALL = 'D';	//picture cells
+	public static final char WALL = 'W', START = 'S', GOAL = 'G', PATH = 'P',	//other cells
+		NORTHWALL = 'A', EASTWALL = 'B', SOUTHWALL = 'C', WESTWALL = 'D';		//picture cells
 	private char cellType = PATH;				// cell type listed above, default is PATH
 	private boolean permanentCellType = false;	// permanent cell type, do not change after set, default is false
 	
@@ -34,12 +34,7 @@ public class Cell extends Coordinate {
 
 		/* Can only set cellType if permanent flag is not set */
 		else if (this.permanentCellType == false) {
-			// if (cType == INVISIWALL) {
-			// 	if (this.cellType == PATH)
-			// 		this.cellType = cType;
-			// }
-			// else
-				this.cellType = cType;
+			this.cellType = cType;
 		}
 	}
 
