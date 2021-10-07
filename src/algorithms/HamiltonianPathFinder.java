@@ -59,25 +59,25 @@ public class HamiltonianPathFinder {
             Cell curCell = pictureCellList.get(i);
             switch(curCell.getCellType()) {
                 case 'A':
-                    int plusY = 4;
+                    int plusY = 3;
                     while (curCell.getY() + plusY > Map.maxY - 2 && plusY >= 3)
                         plusY--;
                     coorList.add(new DirectedCoor(curCell.getY() + plusY, curCell.getX(), DirectedCoor.SOUTH));
                     break;
                 case 'B':
-                    int plusX = 4;
+                    int plusX = 3;
                     while (curCell.getX() + plusX > Map.maxX - 2 && plusX >= 3)
                         plusX--;
                     coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() + plusX, DirectedCoor.WEST));
                     break;
                 case 'C':
-                    int minusY = 4;
+                    int minusY = 3;
                     while (curCell.getY() - minusY < 1 && minusY >= 3)
                         minusY++;
                         coorList.add(new DirectedCoor(curCell.getY() - minusY, curCell.getX(), DirectedCoor.NORTH));
                     break;
                 case 'D':
-                    int minusX = 4;
+                    int minusX = 3;
                     while (curCell.getX() - minusX < 1 && minusX >= 3)
                         minusX++;
                     coorList.add(new DirectedCoor(curCell.getY(), curCell.getX() - minusX, DirectedCoor.EAST));

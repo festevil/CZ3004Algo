@@ -254,6 +254,8 @@ public class FastestPathV2 {
 		int y = curNode.getCell().getY();
 		int x = curNode.getCell().getX();
 
+		// Is there anyway to improve this??
+
 		if (y2 - y == 2 || x2 - x == 2) {
 			switch(curNode.getDir()) {
 				case Node.NORTH:	//nextNode is EAST
@@ -331,7 +333,7 @@ public class FastestPathV2 {
 			Cell c = curMap.getCell(robotFootprint[i]);
 			if (c.getCellType() == Cell.WALL || c.getCellType() == Cell.NORTHWALL ||
 			c.getCellType() == Cell.EASTWALL || c.getCellType() == Cell.SOUTHWALL ||
-			c.getCellType() == Cell.WESTWALL || c.getCellType() == Cell.INVISIWALL) {
+			c.getCellType() == Cell.WESTWALL) {
 				return false;
 			}
 		}
